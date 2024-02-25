@@ -1,12 +1,14 @@
-import React from "react";
+//
+//
 
-function Card() {
+function NarutoCard() {
   return (
     <div>
       <img />
       <h2></h2>
+      <p></p>
     </div>
   );
 }
 
-export default Card;
+export default NarutoCard;

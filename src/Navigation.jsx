@@ -13,8 +13,8 @@ function Navigation() {
             </Link>
           </li>
           <li>
-            <Link to="/PokemonPage" className="text-gray-600">
-              Pokemon
+            <Link to="/NarutoPage" className="text-gray-600">
+              Naruto
             </Link>
           </li>
         </ul>

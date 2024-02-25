@@ -2,13 +2,13 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
 import ButtonPage from "./Pages/ButtonPage";
-import PokemonPage from "./Pages/PokemonPage";
+import NarutoPage from "./Pages/NarutoPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<ButtonPage />} />
-      <Route path="/PokemonPage" element={<PokemonPage />} />
+      <Route path="/NarutoPage" element={<NarutoPage />} />
     </Routes>
   );
 }
