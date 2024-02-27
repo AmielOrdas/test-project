@@ -36,12 +36,19 @@ function ButtonPage() {
         <div className="border-[3px] border-dashed border-blue-600 h-36 w-[15rem] rounded m-auto ">
           <h2 className="flex justify-center mt-8">{count}</h2>
           <Button
-            text1="add"
-            text2="subtract"
-            text3="reset"
-            function1={handleCountAdd}
-            function2={handleCountSubtract}
-            function3={handleCountReset}
+            text={"Add"}
+            Function={handleCountAdd}
+            styles={"text-amber-300 m-2 bg-lime-600 p-2 rounded"}
+          />
+          <Button
+            text={"Subtract"}
+            Function={handleCountSubtract}
+            styles={"text-amber-300 m-2 bg-red-600 p-2 rounded"}
+          />
+          <Button
+            text={"Reset"}
+            Function={handleCountReset}
+            styles={"text-amber-300 m-2 bg-black p-2 rounded"}
           />
         </div>
       </main>
