@@ -3,6 +3,7 @@ import Navigation from "../Navigation";
 import useOnMountUnsafe from "../useOnMountUnsafe";
 import NarutoCard from "../NarutoCard";
 import Button from "../Button";
+import BlankCard from "../BlankCard";
 
 function NarutoPage() {
   const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ function NarutoPage() {
   });
   const [Card2, setCard2] = useState(null);
   const [Card3, setCard3] = useState(null);
-  console.log(Card1.family);
+
   function processString() {
     const processedInputName = inputRef.current.value
       .replace(/-/, " ")
@@ -77,7 +78,7 @@ function NarutoPage() {
       const characterData = await response.json(); // This will convert the object into JSON format which is an array of objects.
       console.log(characterData);
       const characterArrays = characterData.characters.flat();
-      console.log(characterArrays);
+
       setData(characterArrays);
     } catch (error) {
       console.error(error);
@@ -92,43 +93,85 @@ function NarutoPage() {
     <>
       <Navigation />
 
-      <main className="flex justify-center bg-red-500 h-[32.8rem]">
-        <div className="m-auto ">
-          <NarutoCard
-            name={Card1.name}
-            jutsu={Card1.jutsu}
-            images={Card1.images}
-            family={[Card1.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
-          />
-          <div className="flex justify-center">
+      <main className="flex justify-center h-[32.8rem]">
+        <div className="m-auto w-[50rem] bg-orange-500 ">
+          <div className="flex justify-around content-center m-auto">
+            {Card1.name === null ? (
+              <BlankCard
+                name={"Card 1"}
+                images={
+                  "https://vignette2.wikia.nocookie.net/naruto/images/1/12/La_Promesa_de_Naruto.png/revision/latest?cb=20110825232746&path-prefix=es"
+                }
+              />
+            ) : (
+              <NarutoCard
+                name={Card1.name}
+                jutsu={Card1.jutsu}
+                images={Card1.images}
+                family={[Card1.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
+              />
+            )}
+            {Card1.name === null ? (
+              <BlankCard
+                name={"Card 2"}
+                images={
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFiQE7scaXH89XGF8gl8WUOCPzZhWbtCe4ec0PQ6bDUre8IHCvzkDsqncQh83j3Z5CUgc&usqp=CAU"
+                }
+              />
+            ) : (
+              <NarutoCard
+                name={Card1.name}
+                jutsu={Card1.jutsu}
+                images={Card1.images}
+                family={[Card1.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
+              />
+            )}
+            {Card1.name === null ? (
+              <BlankCard
+                name={"Card 3"}
+                images={"https://i.quotev.com/y3sylpvaaaaa.jpg"}
+              />
+            ) : (
+              <NarutoCard
+                name={Card1.name}
+                jutsu={Card1.jutsu}
+                images={Card1.images}
+                family={[Card1.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
+              />
+            )}
+          </div>
+
+          <div className="flex justify-center content-center mt-2">
             <input
               type="text"
               ref={inputRef}
               onChange={handleInputRef}
               placeholder="Enter naruto character full name (ex. Naruto Uzumaki)"
-              className="align-self-center w-[24rem]"
+              className="align-self-center w-1/2 bg-orange-200"
             ></input>
           </div>
-          <div className="flex justify-between">
-            <Button
-              text={"Add to card 1"}
-              Function={handleSetCard1}
-              styles={"text-amber-300 bg-orange-600 rounded mt-2 p-2 "}
-            />
-            <Button
-              text={"Add to card 2"}
-              Function={handleSetCard2}
-              styles={"text-amber-300 bg-blue-600 rounded mt-2 p-2 "}
-            />
-            <Button
-              text={"Add to card 3"}
-              Function={handleSetCard3}
-              styles={"text-amber-300 bg-pink-400 rounded mt-2 p-2 "}
-            />
+          <div className="flex justify-center content-center">
+            <div className="flex justify-between w-1/2 bg-red-600">
+              <Button
+                text={"Add to card 1"}
+                Function={handleSetCard1}
+                styles={"text-amber-300 bg-orange-600 rounded mt-2 p-2"}
+              />
+
+              <Button
+                text={"Add to card 2"}
+                Function={handleSetCard2}
+                styles={"text-amber-300 bg-blue-600 rounded mt-2 p-2 "}
+              />
+
+              <Button
+                text={"Add to card 3"}
+                Function={handleSetCard3}
+                styles={"text-amber-300 bg-pink-400 rounded mt-2 p-2 "}
+              />
+            </div>
           </div>
         </div>
-
-        <div className=" bg-black"></div>
       </main>
     </>
   );
