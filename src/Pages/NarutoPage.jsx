@@ -43,6 +43,46 @@ function NarutoPage() {
     return processedName; // processedName is a 2 dimensional array where [[character attributes]]
   }
 
+  // This gets the saved state of each card in sessionStorage
+  useOnMountUnsafe(() => {
+    const card1Data = sessionStorage.getItem("Card1");
+    const card2Data = sessionStorage.getItem("Card2");
+    const card3Data = sessionStorage.getItem("Card3");
+    card1Data === null
+      ? setCard1({
+          name: null,
+          jutsu: null,
+          images: [],
+          family: {},
+        })
+      : setCard1(JSON.parse(card1Data));
+    card2Data === null
+      ? setCard2({
+          name: null,
+          jutsu: null,
+          images: [],
+          family: {},
+        })
+      : setCard2(JSON.parse(card2Data));
+    card3Data === null
+      ? setCard3({
+          name: null,
+          jutsu: null,
+          images: [],
+          family: {},
+        })
+      : setCard3(JSON.parse(card3Data));
+  });
+
+  useEffect(() => {
+    const card1String = JSON.stringify(Card1);
+    const card2String = JSON.stringify(Card2);
+    const card3String = JSON.stringify(Card3);
+    sessionStorage.setItem("Card1", card1String); // whenever the state "count" changes,
+    sessionStorage.setItem("Card2", card2String); // whenever the state "count" changes,
+    sessionStorage.setItem("Card3", card3String); // whenever the state "count" changes,
+  }, [Card1, Card2, Card3]);
+
   function handleInputRef() {}
 
   function handleSetCard1() {
@@ -116,7 +156,7 @@ function NarutoPage() {
         throw new Error("Could not fetch resource"); // This will execute when fetching fails.
       }
       const characterData = await response.json(); // This will convert the object into JSON format which is an array of objects.
-      console.log(characterData);
+
       const characterArrays = characterData.characters.flat();
 
       setData(characterArrays);
@@ -138,6 +178,7 @@ function NarutoPage() {
           <div className="flex justify-around align-center mt-2">
             {Card1.name === null ? (
               <BlankCard
+                textColor={"text-orange-500"}
                 shadowColor={"shadow-orange-500"}
                 name={"Card 1"}
                 images={
@@ -156,6 +197,7 @@ function NarutoPage() {
             )}
             {Card2.name === null ? (
               <BlankCard
+                textColor={"text-blue-500"}
                 shadowColor={"shadow-blue-700/50"}
                 name={"Card 2"}
                 images={
@@ -174,6 +216,7 @@ function NarutoPage() {
             )}
             {Card3.name === null ? (
               <BlankCard
+                textColor={"text-pink-500"}
                 shadowColor={"shadow-pink-400/90"}
                 name={"Card 3"}
                 images={"https://i.quotev.com/y3sylpvaaaaa.jpg"}

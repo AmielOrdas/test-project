@@ -32,13 +32,13 @@ function NarutoCard({ textColor, shadowColor, name, jutsu, images, family }) {
       <h2 className={`font-serif font-bold text-2xl ${textColor} my-[0.5rem]`}>{name}</h2>
 
       <p className="self-start font-serif">
-        <h1 className="font-bold inline"> Jutsu: </h1>
+        <span className="font-bold inline"> Jutsu: </span>
 
         {jutsu.length >= 3 ? getFirstThree(jutsu) : getAllElements(jutsu)}
       </p>
 
       <p className="self-start font-serif">
-        <h1 className="font-bold inline"> Family: </h1>
+        <span className="font-bold inline"> Family: </span>
 
         {/* // remember that family is an array of object */}
         {family.map((Members) => {
