@@ -14,13 +14,24 @@ function NarutoPage() {
     images: [],
     family: {},
   });
-  const [Card2, setCard2] = useState(null);
-  const [Card3, setCard3] = useState(null);
+  const [Card2, setCard2] = useState({
+    name: null,
+    jutsu: null,
+    images: [],
+    family: {},
+  });
+  const [Card3, setCard3] = useState({
+    name: null,
+    jutsu: null,
+    images: [],
+    family: {},
+  });
 
   function processString() {
     const processedInputName = inputRef.current.value
       .replace(/-/, " ")
       .replace(/[ōŌ]/, "o") // The /[ōŌ]/ means replace any ō and Ō with small letter "o". The slashes is same with " " but general purposes.
+      .replace(/[ūŪ]/, "u") // The /[ūŪ]/ means replace any ū and Ū with small letter "U". The slashes is same with " " but general purposes.
       .toLowerCase();
 
     const processedName = data.filter(
@@ -32,38 +43,67 @@ function NarutoPage() {
     return processedName; // processedName is a 2 dimensional array where [[character attributes]]
   }
 
-  function handleInputRef() {
-    const processedInput = inputRef.current.value
-      .replace(/-/, " ")
-      .replace(/[ōŌ]/, "o") // The /[ōŌ]/ means replace any ō and Ō with small letter "o". The slashes is same with " " but general purposes.
-      .replace(/[ūŪ]/, "u")
-      .toLowerCase();
-  }
+  function handleInputRef() {}
 
   function handleSetCard1() {
     const character = processString();
-
-    const [arrayCharacter] = character; // We destructed the 2D array of processedName into 1D array.
-
-    setCard1({
-      name: arrayCharacter.name,
-      jutsu: arrayCharacter.jutsu,
-      images: arrayCharacter.images,
-      family: arrayCharacter.family,
-    });
-
-    console.log(Card1);
+    if (character.length === 0) {
+      inputRef.current.value = "";
+      inputRef.current.placeholder =
+        "Please enter correct name (ex. Madara Uchiha, not Uchiha Madara)";
+      inputRef.current.style.borderColor = "red";
+      alert("Character not found");
+    } else {
+      inputRef.current.style.borderColor = "green";
+      inputRef.current.value = "";
+      const [arrayCharacter] = character; // We destructed the 2D array of processedName into 1D array.
+      setCard1({
+        name: arrayCharacter.name,
+        jutsu: arrayCharacter.jutsu,
+        images: arrayCharacter.images,
+        family: arrayCharacter.family,
+      });
+    }
   }
   function handleSetCard2() {
     const character = processString();
-
-    setCard2((prevCard) => (prevCard = character));
+    if (character.length === 0) {
+      inputRef.current.value = "";
+      inputRef.current.placeholder =
+        "Please enter correct name (ex. Madara Uchiha, not Uchiha Madara)";
+      inputRef.current.style.borderColor = "red";
+      alert("Character not found");
+    } else {
+      inputRef.current.style.borderColor = "green";
+      inputRef.current.value = "";
+      const [arrayCharacter] = character; // We destructed the 2D array of processedName into 1D array.
+      setCard2({
+        name: arrayCharacter.name,
+        jutsu: arrayCharacter.jutsu,
+        images: arrayCharacter.images,
+        family: arrayCharacter.family,
+      });
+    }
   }
   function handleSetCard3() {
     const character = processString();
-
-    console.log(character);
-    setCard3((prevCard) => (prevCard = character));
+    if (character.length === 0) {
+      inputRef.current.value = "";
+      inputRef.current.placeholder =
+        "Please enter correct name (ex. Madara Uchiha, not Uchiha Madara)";
+      inputRef.current.style.borderColor = "red";
+      alert("Character not found");
+    } else {
+      inputRef.current.style.borderColor = "green";
+      inputRef.current.value = "";
+      const [arrayCharacter] = character; // We destructed the 2D array of processedName into 1D array.
+      setCard3({
+        name: arrayCharacter.name,
+        jutsu: arrayCharacter.jutsu,
+        images: arrayCharacter.images,
+        family: arrayCharacter.family,
+      });
+    }
   }
 
   async function fetchNaruto() {
@@ -94,10 +134,11 @@ function NarutoPage() {
       <Navigation />
 
       <main className="flex justify-center h-[32.8rem]">
-        <div className="m-auto w-[50rem] bg-orange-500 ">
-          <div className="flex justify-around content-center m-auto">
+        <div className="w-full">
+          <div className="flex justify-around align-center mt-2">
             {Card1.name === null ? (
               <BlankCard
+                shadowColor={"shadow-orange-500"}
                 name={"Card 1"}
                 images={
                   "https://vignette2.wikia.nocookie.net/naruto/images/1/12/La_Promesa_de_Naruto.png/revision/latest?cb=20110825232746&path-prefix=es"
@@ -105,14 +146,17 @@ function NarutoPage() {
               />
             ) : (
               <NarutoCard
+                textColor={"text-orange-500"}
+                shadowColor={"shadow-orange-500"}
                 name={Card1.name}
                 jutsu={Card1.jutsu}
                 images={Card1.images}
                 family={[Card1.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
               />
             )}
-            {Card1.name === null ? (
+            {Card2.name === null ? (
               <BlankCard
+                shadowColor={"shadow-blue-700/50"}
                 name={"Card 2"}
                 images={
                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFiQE7scaXH89XGF8gl8WUOCPzZhWbtCe4ec0PQ6bDUre8IHCvzkDsqncQh83j3Z5CUgc&usqp=CAU"
@@ -120,23 +164,28 @@ function NarutoPage() {
               />
             ) : (
               <NarutoCard
-                name={Card1.name}
-                jutsu={Card1.jutsu}
-                images={Card1.images}
-                family={[Card1.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
+                textColor={"text-blue-500"}
+                shadowColor={"shadow-blue-700/50"}
+                name={Card2.name}
+                jutsu={Card2.jutsu}
+                images={Card2.images}
+                family={[Card2.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
               />
             )}
-            {Card1.name === null ? (
+            {Card3.name === null ? (
               <BlankCard
+                shadowColor={"shadow-pink-400/90"}
                 name={"Card 3"}
                 images={"https://i.quotev.com/y3sylpvaaaaa.jpg"}
               />
             ) : (
               <NarutoCard
-                name={Card1.name}
-                jutsu={Card1.jutsu}
-                images={Card1.images}
-                family={[Card1.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
+                textColor={"text-pink-500"}
+                shadowColor={"shadow-pink-400/90"}
+                name={Card3.name}
+                jutsu={Card3.jutsu}
+                images={Card3.images}
+                family={[Card3.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
               />
             )}
           </div>
@@ -147,11 +196,11 @@ function NarutoPage() {
               ref={inputRef}
               onChange={handleInputRef}
               placeholder="Enter naruto character full name (ex. Naruto Uzumaki)"
-              className="align-self-center w-1/2 bg-orange-200"
+              className="w-1/2 bg-red-100 border-2 m-5 rounded-md placeholder-gray-400"
             ></input>
           </div>
-          <div className="flex justify-center content-center">
-            <div className="flex justify-between w-1/2 bg-red-600">
+          <div className="flex justify-center">
+            <div className="flex justify-between w-1/4">
               <Button
                 text={"Add to card 1"}
                 Function={handleSetCard1}
