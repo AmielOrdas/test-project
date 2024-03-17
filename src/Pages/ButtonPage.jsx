@@ -5,18 +5,19 @@ import useOnMountUnsafe from "../useOnMountUnsafe";
 
 function ButtonPage() {
   const [count, setCount] = useState(0);
-  useOnMountUnsafe(() => {
-    const data = sessionStorage.getItem("countKey"); // fetches the key "countKey" in the local storage.
 
+  useOnMountUnsafe(() => {
+    const data = sessionStorage.getItem("countKey"); // fetches the key "countKey" in the session storage.
+    console.log("Ran once");
     data === null ? setCount(0) : setCount(JSON.parse(data)); // if data is null then count = 0 will be displayed. If data is not null then we parse the saved number
     // in the local storage so that it becomes a number instead of a string.
-
-    console.log(data);
   });
 
-  useEffect(() => {
-    sessionStorage.setItem("countKey", count); // whenever the state "count" changes,
-  }, [count]);
+  useOnMountUnsafe(() => {
+    console.log("Ran once XD");
+    sessionStorage.setItem("countKey", JSON.stringify(count));
+  }, count);
+
   function handleCountAdd() {
     setCount((prevCount) => prevCount + 1);
   }

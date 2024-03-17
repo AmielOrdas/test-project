@@ -2,6 +2,8 @@
 //
 
 function NarutoCard({ textColor, shadowColor, name, jutsu, images, family }) {
+  family[0] === "None" && family.splice(0, 1);
+  console.log("XD");
   function getFirstThree(array) {
     const firstThree = array.slice(0, 3); // Get the first three family members inside the "membersArray"
 
@@ -41,16 +43,17 @@ function NarutoCard({ textColor, shadowColor, name, jutsu, images, family }) {
         <span className="font-bold inline"> Family: </span>
 
         {/* // remember that family is an array of object */}
-        {family.map((Members) => {
-          const membersArray = Object.values(Members); // This will transfer all the properties (families) to the new array "membersArray"
+        {family &&
+          family.map((Members) => {
+            const membersArray = Object.values(Members); // This will transfer all the properties (families) to the new array "membersArray"
 
-          // if the length of the membersArray is greather than 3 then we only display the first three, else display all.
-          if (membersArray.length >= 3) {
-            return getFirstThree(membersArray);
-          } else {
-            return getAllElements(membersArray);
-          }
-        })}
+            // if the length of the membersArray is greather than 3 then we only display the first three, else display all.
+            if (membersArray.length >= 3) {
+              return getFirstThree(membersArray);
+            } else {
+              return getAllElements(membersArray);
+            }
+          })}
       </p>
     </div>
   );

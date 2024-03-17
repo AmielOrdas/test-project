@@ -36,10 +36,15 @@ function NarutoPage() {
 
     const processedName = data.filter(
       (character) =>
-        character.name.replace(/-/, " ").replace(/[ōŌ]/, "o").toLowerCase() === // The /[ōŌ]/ means replace any ō and Ō with small letter "o".
+        character.name
+          .replace(/-/, " ")
+          .replace(/[ōŌ]/, "o")
+          .replace(/[ūŪ]/, "u")
+          .toLowerCase() === // The /[ōŌ]/ means replace any ō and Ō with small letter "o".
         processedInputName
     );
-
+    console.log(processedName);
+    console.log(processedInputName);
     return processedName; // processedName is a 2 dimensional array where [[character attributes]]
   }
 
@@ -73,20 +78,24 @@ function NarutoPage() {
         })
       : setCard3(JSON.parse(card3Data));
   });
-
+  // This saves the state of each card whenever the cards state changes.
   useEffect(() => {
+    // We convert the objects into string version
     const card1String = JSON.stringify(Card1);
     const card2String = JSON.stringify(Card2);
     const card3String = JSON.stringify(Card3);
-    sessionStorage.setItem("Card1", card1String); // whenever the state "count" changes,
-    sessionStorage.setItem("Card2", card2String); // whenever the state "count" changes,
-    sessionStorage.setItem("Card3", card3String); // whenever the state "count" changes,
+
+    // We put the card states in string version whever the Card1, Card2, and Card3 state changes.
+    sessionStorage.setItem("Card1", card1String);
+    sessionStorage.setItem("Card2", card2String);
+    sessionStorage.setItem("Card3", card3String);
   }, [Card1, Card2, Card3]);
 
   function handleInputRef() {}
 
   function handleSetCard1() {
-    const character = processString();
+    let character = {};
+    character = processString();
     if (character.length === 0) {
       inputRef.current.value = "";
       inputRef.current.placeholder =
@@ -97,12 +106,20 @@ function NarutoPage() {
       inputRef.current.style.borderColor = "green";
       inputRef.current.value = "";
       const [arrayCharacter] = character; // We destructed the 2D array of processedName into 1D array.
-      setCard1({
-        name: arrayCharacter.name,
-        jutsu: arrayCharacter.jutsu,
-        images: arrayCharacter.images,
-        family: arrayCharacter.family,
-      });
+
+      arrayCharacter.family === undefined
+        ? setCard1({
+            name: arrayCharacter.name,
+            jutsu: arrayCharacter.jutsu,
+            images: arrayCharacter.images,
+            family: "None",
+          })
+        : setCard1({
+            name: arrayCharacter.name,
+            jutsu: arrayCharacter.jutsu,
+            images: arrayCharacter.images,
+            family: arrayCharacter.family,
+          });
     }
   }
   function handleSetCard2() {
@@ -159,6 +176,8 @@ function NarutoPage() {
 
       const characterArrays = characterData.characters.flat();
 
+      console.log(characterArrays);
+
       setData(characterArrays);
     } catch (error) {
       console.error(error);
@@ -166,6 +185,7 @@ function NarutoPage() {
   }
 
   useOnMountUnsafe(() => {
+    console.log(`Passed use effect here!`);
     fetchNaruto();
   });
 
@@ -238,7 +258,7 @@ function NarutoPage() {
               type="text"
               ref={inputRef}
               onChange={handleInputRef}
-              placeholder="Enter naruto character full name (ex. Naruto Uzumaki)"
+              placeholder="Enter naruto character using full name (ex. Naruto Uzumaki)"
               className="w-1/2 bg-red-100 border-2 m-5 rounded-md placeholder-gray-400"
             ></input>
           </div>
