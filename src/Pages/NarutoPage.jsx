@@ -85,7 +85,7 @@ function NarutoPage() {
     const card2String = JSON.stringify(Card2);
     const card3String = JSON.stringify(Card3);
 
-    // We put the card states in string version whever the Card1, Card2, and Card3 state changes.
+    // We put the card states in string version whenever the Card1, Card2, and Card3 state changes.
     sessionStorage.setItem("Card1", card1String);
     sessionStorage.setItem("Card2", card2String);
     sessionStorage.setItem("Card3", card3String);
@@ -93,9 +93,9 @@ function NarutoPage() {
 
   function handleInputRef() {}
 
-  function handleSetCard1() {
-    let character = {};
-    character = processString();
+  function handleSetCard1(e) {
+    e.preventDefault();
+    const character = processString();
     if (character.length === 0) {
       inputRef.current.value = "";
       inputRef.current.placeholder =
@@ -107,19 +107,12 @@ function NarutoPage() {
       inputRef.current.value = "";
       const [arrayCharacter] = character; // We destructed the 2D array of processedName into 1D array.
 
-      arrayCharacter.family === undefined
-        ? setCard1({
-            name: arrayCharacter.name,
-            jutsu: arrayCharacter.jutsu,
-            images: arrayCharacter.images,
-            family: "None",
-          })
-        : setCard1({
-            name: arrayCharacter.name,
-            jutsu: arrayCharacter.jutsu,
-            images: arrayCharacter.images,
-            family: arrayCharacter.family,
-          });
+      setCard1({
+        name: arrayCharacter.name,
+        jutsu: arrayCharacter.jutsu,
+        images: arrayCharacter.images,
+        family: arrayCharacter.family,
+      });
     }
   }
   function handleSetCard2() {
@@ -193,8 +186,8 @@ function NarutoPage() {
     <>
       <Navigation />
 
-      <main className="flex justify-center h-[32.8rem]">
-        <div className="w-full">
+      <main className="flex justify-center">
+        <div className="min-w-screen ">
           <div className="flex justify-around align-center mt-2">
             {Card1.name === null ? (
               <BlankCard
@@ -212,7 +205,7 @@ function NarutoPage() {
                 name={Card1.name}
                 jutsu={Card1.jutsu}
                 images={Card1.images}
-                family={[Card1.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
+                family={[Card1.family]} // The reason why we need to enclose [] so that we will pass an array because we used array methods in NarutoCard.jsx
               />
             )}
             {Card2.name === null ? (
@@ -231,7 +224,7 @@ function NarutoPage() {
                 name={Card2.name}
                 jutsu={Card2.jutsu}
                 images={Card2.images}
-                family={[Card2.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
+                family={[Card2.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesn't want an object component.
               />
             )}
             {Card3.name === null ? (
@@ -248,38 +241,40 @@ function NarutoPage() {
                 name={Card3.name}
                 jutsu={Card3.jutsu}
                 images={Card3.images}
-                family={[Card3.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesnt want an object component.
+                family={[Card3.family]} // The reason why we need to enclose [] so that we will pass an array. Remember that react doesn't want an object component.
               />
             )}
           </div>
 
-          <div className="flex justify-center content-center mt-2">
-            <input
-              type="text"
-              ref={inputRef}
-              onChange={handleInputRef}
-              placeholder="Enter naruto character using full name (ex. Naruto Uzumaki)"
-              className="w-1/2 bg-red-100 border-2 m-5 rounded-md placeholder-gray-400"
-            ></input>
+          <div className="flex justify-center mt-2 ">
+            <div className="flex justify-center w-1/2 ">
+              <input
+                type="text"
+                ref={inputRef}
+                onChange={handleInputRef}
+                placeholder="Enter naruto character using full name (ex. Naruto Uzumaki)"
+                className="w-full bg-red-100 border-2 m-5 rounded-md placeholder-gray-400"
+              ></input>
+            </div>
           </div>
           <div className="flex justify-center">
-            <div className="flex justify-between w-1/4">
+            <div className="flex justify-between w-1/3">
               <Button
                 text={"Add to card 1"}
-                Function={handleSetCard1}
-                styles={"text-amber-300 bg-orange-600 rounded mt-2 p-2"}
+                Function={(e) => handleSetCard1(e)}
+                styles={"text-amber-300 bg-orange-600 rounded mx-3 mt-2 p-2"}
               />
 
               <Button
                 text={"Add to card 2"}
                 Function={handleSetCard2}
-                styles={"text-amber-300 bg-blue-600 rounded mt-2 p-2 "}
+                styles={"text-amber-300 bg-blue-600 rounded mx-3 mt-2 p-2 "}
               />
 
               <Button
                 text={"Add to card 3"}
                 Function={handleSetCard3}
-                styles={"text-amber-300 bg-pink-400 rounded mt-2 p-2 "}
+                styles={"text-amber-300 bg-pink-400 rounded mx-3 mt-2 p-2 "}
               />
             </div>
           </div>

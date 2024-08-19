@@ -6,17 +6,18 @@ import useOnMountUnsafe from "../useOnMountUnsafe";
 function ButtonPage() {
   const [count, setCount] = useState(0);
 
-  useOnMountUnsafe(() => {
-    const data = sessionStorage.getItem("countKey"); // fetches the key "countKey" in the session storage.
-    console.log("Ran once");
-    data === null ? setCount(0) : setCount(JSON.parse(data)); // if data is null then count = 0 will be displayed. If data is not null then we parse the saved number
-    // in the local storage so that it becomes a number instead of a string.
-  });
+  (function storeToSessionStorage() {
+    useOnMountUnsafe(() => {
+      const data = sessionStorage.getItem("countKey"); // fetches the key "countKey" in the session storage.
+      console.log("Hello");
+      data === null ? setCount(0) : setCount(JSON.parse(data)); // if data is null then count = 0 will be displayed. If data is not null then we parse the saved number in the local storage so that it becomes a number instead of a string.
+    });
+  })();
 
-  useOnMountUnsafe(() => {
+  useEffect(() => {
     console.log("Ran once XD");
     sessionStorage.setItem("countKey", JSON.stringify(count));
-  }, count);
+  }, [count]);
 
   function handleCountAdd() {
     setCount((prevCount) => prevCount + 1);
@@ -34,7 +35,7 @@ function ButtonPage() {
       <Navigation />
 
       <main className="flex justify-center h-[32.8rem] ">
-        <div className="border-[3px] border-dashed border-blue-600 h-36 w-[15rem] rounded m-auto ">
+        <div className="border-[3px] border-dashed border-blue-600 h-36 w-[15rem] rounded m-auto">
           <h2 className="flex justify-center mt-8">{count}</h2>
           <Button
             text={"Add"}
