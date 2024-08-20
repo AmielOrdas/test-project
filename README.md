@@ -9,4 +9,13 @@ Currently, two official plugins are available:
 
 # Introduction
 
-This test project aims to create a project that uses all possible React hooks, Javascript concepts, tailwind/css features, and html tags. This serves as a reference for future projects.
+This test project aims to create a project that uses all possible React hooks, Javascript concepts, tailwind/css features, and html tags. This is to apply what I learned in the tutorials and serves as a reference for future projects.
+
+# Concepts used
+
+The project is able to utilize different React / JavaScript concepts such as:
+
+1. **React reusable components** to build UI.
+2. **Session storage** to store states.
+3. Use **asynchronous concepts** (asynch/await) and **fetchAPI** to obtain data from an API.
+4. Different **react hooks** to store data and perform side effects.
