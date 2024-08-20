@@ -165,10 +165,11 @@ function NarutoPage() {
       if (!response.ok) {
         throw new Error("Could not fetch resource"); // This will execute when fetching fails.
       }
-      const characterData = await response.json(); // This will convert the object into JSON format which is an array of objects.
-
-      const characterArrays = characterData.characters.flat();
-
+      console.log("Before json: ", response);
+      const characterData = await response.json(); // This will convert the body of the HTTP response from JSON format into a JavaScript object.
+      console.log("After json: ", characterData);
+      // const characterArrays = characterData.characters.flat();
+      const characterArrays = characterData.characters;
       console.log(characterArrays);
 
       setData(characterArrays);
